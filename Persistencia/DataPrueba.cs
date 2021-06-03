@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Persistencia
 {
-    class DataPrueba
+    public class DataPrueba
     {
         public static async Task InsertarData(TiendaContext context, UserManager<Usuario> usuarioManager) {
 
