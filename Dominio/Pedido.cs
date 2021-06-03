@@ -5,6 +5,7 @@ namespace Dominio
     {
          public Guid PedidoId {get;set;}
          public Guid BoletaId{get;set;}
-         
+         public Boleta Boleta { get; set; }
+
     }
 }

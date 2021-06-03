@@ -7,7 +7,8 @@ namespace Dominio
        public Guid ProductoId{get;set;} 
        public string Nombre{get;set;} 
       
-        public Guid CategoriaId{get;set;} 
+        public Guid CategoriaId{get;set;}
+        public Categoria Categoria { get; set; }
         public decimal Precio{get;set;}
         public decimal Igv{get;set;}
         public int Cantidad{get;set;}
