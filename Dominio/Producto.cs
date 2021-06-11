@@ -14,5 +14,8 @@ namespace Dominio
         [Column(TypeName = "decimal(18,4)")]
         public decimal Precio {get;set;}
         public ICollection<DetalleBoleta> BoletaLink{get;set;}
+
+        public Guid CategoriaId {get;set;}
+        public Categoria Categoria {get;set;}
     }
 }
