@@ -1,15 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dominio
 {
     public class Boleta
     {
-           public Guid BoletaId{get;set;} 
-           public Guid UsuarioId{get;set;} 
-           public Usuario Usuario { get; set; }
-           public ICollection<ItemBoleta> Itemlink{get;set;}
-           public DateTime FechaCreacion {get;set;}
-
+        public Guid BoletaId {get;set;}
+        [Column(TypeName = "decimal(18,4)")]
+        public decimal Igv {get;set;}
+        public ICollection<DetalleBoleta> ProductoLink{get;set;}
     }
 }

@@ -12,16 +12,20 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Persistencia;
 
-
 namespace WebAPI
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            var hostServer=CreateHostBuilder(args).Build();
-            using(var ambiente=hostServer.Services.CreateScope()){
-             var services= ambiente.ServiceProvider;
+            //antes de modificar
+            //CreateHostBuilder(args).Build().Run();
+
+            //para ejecutar el archivo de migracion
+            var hostServer = CreateHostBuilder(args).Build();
+            using (var ambiente = hostServer.Services.CreateScope()){
+                var services = ambiente.ServiceProvider;
+
                 try
                 {
                     var userManager = services.GetRequiredService<UserManager<Usuario>>();
@@ -41,12 +45,10 @@ namespace WebAPI
                 }
 
             }
-
             hostServer.Run();
 
-
-
-
+            //entramos al proyecto webapi y ejecutamos el sgte comando
+            //dotnet watch run
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -55,7 +57,5 @@ namespace WebAPI
                 {
                     webBuilder.UseStartup<Startup>();
                 });
-
-
     }
 }
