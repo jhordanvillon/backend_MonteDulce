@@ -18,7 +18,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Persistencia;
 using WebAPI.middlewares;
-using Aplicacion.Productos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Aplicacion.Contratos;
@@ -28,6 +27,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Authentication;
 using Seguridad;
+using Aplicacion.Categorias;
 
 namespace WebAPI
 {
@@ -84,7 +84,7 @@ namespace WebAPI
             services.TryAddSingleton<ISystemClock,SystemClock>();
 
             //para q funcione el mapper
-            //services.AddAutoMapper(typeof(Consulta.Handler));*/
+            //services.AddAutoMapper(typeof(Consulta.Handler));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -100,6 +100,7 @@ namespace WebAPI
             //app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
