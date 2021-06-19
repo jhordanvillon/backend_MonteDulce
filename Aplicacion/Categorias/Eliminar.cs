@@ -6,7 +6,7 @@ using Aplicacion.ErrorHandler;
 using MediatR;
 using Persistencia;
 
-namespace Aplicacion.Productos
+namespace Aplicacion.Categorias
 {
     public class Eliminar
     {
@@ -22,11 +22,11 @@ namespace Aplicacion.Productos
             }
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
-                var producto = await _context.Producto.FindAsync(request.Id);
-                if(producto == null){
-                    throw new ExceptionHandler(HttpStatusCode.NotFound,new {producto = "No se encontro el producto"});
+                var categoria = await _context.Categoria.FindAsync(request.Id);
+                if(categoria == null){
+                    throw new ExceptionHandler(HttpStatusCode.NotFound,new {categoria = "No se encontro el producto"});
                 }
-                _context.Remove(producto);
+                _context.Remove(categoria);
 
                 var resultado = await _context.SaveChangesAsync();
                 if(resultado > 0){
@@ -35,6 +35,7 @@ namespace Aplicacion.Productos
 
                 throw new Exception("No se pudo guardar los cambios");
             }
+
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -51,7 +52,8 @@ namespace Aplicacion.Seguridad
                         Token = _jwtGenerador.CrearToken(usuario),
                         Username = usuario.UserName,
                         Email = usuario.Email,
-                        Imagen = null
+                        ExpiresIn = DateTime.Now.AddDays(30).Ticks,
+                        AdminNameRole = usuario.AdminNameRole
                     };
                 }
 

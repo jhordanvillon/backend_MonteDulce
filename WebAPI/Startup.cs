@@ -28,6 +28,10 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Authentication;
 using Seguridad;
 using Aplicacion.Categorias;
+using AutoMapper;
+using Microsoft.OpenApi.Models;
+using Persistencia.DapperConexion;
+using Persistencia.DapperConexion.Producto;
 
 namespace WebAPI
 {
@@ -84,7 +88,25 @@ namespace WebAPI
             services.TryAddSingleton<ISystemClock,SystemClock>();
 
             //para q funcione el mapper
-            //services.AddAutoMapper(typeof(Consulta.Handler));
+            services.AddAutoMapper(typeof(Consulta.Handler));
+            
+            //dapper para pasarle la cadena de conexion a la clase
+            services.AddOptions();
+            services.Configure<ConexionConfiguracion>(Configuration.GetSection("ConnectionStrings"));
+            services.AddTransient<IFactoryConnection,FactoryConnection>();
+            services.AddScoped<IProducto,ProductoRepositorio>();
+
+
+            
+            //para usar swagger
+            services.AddSwaggerGen(c => {
+                c.SwaggerDoc("v1",new OpenApiInfo{
+                    Title = "Doc de MonteDulce",
+                    Version="v1"
+                });
+                c.CustomSchemaIds(c=>c.FullName);//para evitar conflictos usa el namespace
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -107,6 +129,12 @@ namespace WebAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            //para usar swagger
+            app.UseSwagger();
+            app.UseSwaggerUI(c=>{
+                c.SwaggerEndpoint("/swagger/v1/swagger.json","MonteDulce");
             });
         }
     }

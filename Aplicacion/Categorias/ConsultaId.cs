@@ -5,24 +5,24 @@ using Dominio;
 using MediatR;
 using Persistencia;
 
-namespace Aplicacion.Productos
+namespace Aplicacion.Categorias
 {
     public class ConsultaId
     {
-        public class ProductoUnico : IRequest<Producto> {
+        public class CategoriaUnica : IRequest<Categoria>{
             public Guid Id {get;set;}
         }
 
-        public class Handler : IRequestHandler<ProductoUnico, Producto>
+        public class Handler : IRequestHandler<CategoriaUnica, Categoria>
         {
             private readonly TiendaContext _context;
             public Handler(TiendaContext context){
                 _context = context;
             }
-            public async Task<Producto> Handle(ProductoUnico request, CancellationToken cancellationToken)
+            public async Task<Categoria> Handle(CategoriaUnica request, CancellationToken cancellationToken)
             {
-                var producto = await _context.Producto.FindAsync(request.Id);
-                return producto;
+                var categoria = await _context.Categoria.FindAsync(request.Id);
+                return categoria;
             }
         }
     }

@@ -1,3 +1,5 @@
+using System;
+
 namespace Aplicacion.Seguridad
 {
     public class UsuarioData
@@ -6,6 +8,7 @@ namespace Aplicacion.Seguridad
         public string Token {get;set;}
         public string Email {get;set;}
         public string Username {get;set;}
-        public string Imagen {get;set;}
+        public long ExpiresIn {get;set;}
+        public string AdminNameRole {get;set;}
     }
 }

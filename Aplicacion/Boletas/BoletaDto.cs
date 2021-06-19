@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 
-namespace Dominio
+namespace Aplicacion.Boletas
 {
-    public class Boleta
+    public class BoletaDto
     {
         public Guid BoletaId {get;set;}
-        public ICollection<ItemBoleta> ListaItems {get;set;}
+        public List<ItemBoletaDto> Items {get;set;}
         public DateTime? FechaCreacion {get;set;}
     }
 }

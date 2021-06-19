@@ -3,35 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistencia;
 
 namespace Persistencia.Migrations
 {
     [DbContext(typeof(TiendaContext))]
-    partial class TiendaContextModelSnapshot : ModelSnapshot
+    [Migration("20210618061342_errormigrations5")]
+    partial class errormigrations5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Dominio.Boleta", b =>
-                {
-                    b.Property<Guid>("BoletaId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("FechaCreacion")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("BoletaId");
-
-                    b.ToTable("Boleta");
-                });
 
             modelBuilder.Entity("Dominio.Categoria", b =>
                 {
@@ -48,63 +36,6 @@ namespace Persistencia.Migrations
                     b.HasKey("CategoriaId");
 
                     b.ToTable("Categoria");
-                });
-
-            modelBuilder.Entity("Dominio.ItemBoleta", b =>
-                {
-                    b.Property<Guid>("ItemBoletaId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("BoletaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Cantidad")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("ProductoId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ItemBoletaId");
-
-                    b.HasIndex("BoletaId");
-
-                    b.HasIndex("ProductoId");
-
-                    b.ToTable("ItemBoleta");
-                });
-
-            modelBuilder.Entity("Dominio.Pedido", b =>
-                {
-                    b.Property<Guid>("PedidoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("BoletaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CodigoPago")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("FechaCreacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TipoPedido")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("UsuarioId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UsuarioId1")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("PedidoId");
-
-                    b.HasIndex("BoletaId");
-
-                    b.HasIndex("UsuarioId1");
-
-                    b.ToTable("Pedido");
                 });
 
             modelBuilder.Entity("Dominio.Producto", b =>
@@ -130,9 +61,6 @@ namespace Persistencia.Migrations
 
                     b.Property<decimal>("Precio")
                         .HasColumnType("decimal(18,4)");
-
-                    b.Property<int>("Stock")
-                        .HasColumnType("int");
 
                     b.HasKey("ProductoId");
 
@@ -341,34 +269,6 @@ namespace Persistencia.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("Dominio.ItemBoleta", b =>
-                {
-                    b.HasOne("Dominio.Boleta", "Boleta")
-                        .WithMany("ListaItems")
-                        .HasForeignKey("BoletaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Dominio.Producto", "Producto")
-                        .WithMany()
-                        .HasForeignKey("ProductoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Dominio.Pedido", b =>
-                {
-                    b.HasOne("Dominio.Boleta", "Boleta")
-                        .WithMany()
-                        .HasForeignKey("BoletaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Dominio.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId1");
                 });
 
             modelBuilder.Entity("Dominio.Producto", b =>

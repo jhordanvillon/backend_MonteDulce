@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistencia;
 
 namespace Persistencia.Migrations
 {
     [DbContext(typeof(TiendaContext))]
-    partial class TiendaContextModelSnapshot : ModelSnapshot
+    [Migration("20210612222849_errormigrations3")]
+    partial class errormigrations3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,8 +27,8 @@ namespace Persistencia.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("FechaCreacion")
-                        .HasColumnType("datetime2");
+                    b.Property<decimal>("Igv")
+                        .HasColumnType("decimal(18,4)");
 
                     b.HasKey("BoletaId");
 
@@ -50,61 +52,19 @@ namespace Persistencia.Migrations
                     b.ToTable("Categoria");
                 });
 
-            modelBuilder.Entity("Dominio.ItemBoleta", b =>
+            modelBuilder.Entity("Dominio.DetalleBoleta", b =>
                 {
-                    b.Property<Guid>("ItemBoletaId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("BoletaId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Cantidad")
-                        .HasColumnType("int");
 
                     b.Property<Guid>("ProductoId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("ItemBoletaId");
-
-                    b.HasIndex("BoletaId");
+                    b.HasKey("BoletaId", "ProductoId");
 
                     b.HasIndex("ProductoId");
 
-                    b.ToTable("ItemBoleta");
-                });
-
-            modelBuilder.Entity("Dominio.Pedido", b =>
-                {
-                    b.Property<Guid>("PedidoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("BoletaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CodigoPago")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("FechaCreacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TipoPedido")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("UsuarioId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UsuarioId1")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("PedidoId");
-
-                    b.HasIndex("BoletaId");
-
-                    b.HasIndex("UsuarioId1");
-
-                    b.ToTable("Pedido");
+                    b.ToTable("DetalleBoleta");
                 });
 
             modelBuilder.Entity("Dominio.Producto", b =>
@@ -131,9 +91,6 @@ namespace Persistencia.Migrations
                     b.Property<decimal>("Precio")
                         .HasColumnType("decimal(18,4)");
 
-                    b.Property<int>("Stock")
-                        .HasColumnType("int");
-
                     b.HasKey("ProductoId");
 
                     b.HasIndex("CategoriaId");
@@ -148,9 +105,6 @@ namespace Persistencia.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
-
-                    b.Property<string>("AdminNameRole")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -198,6 +152,9 @@ namespace Persistencia.Migrations
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
+
+                    b.Property<string>("adminNameRole")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -343,32 +300,19 @@ namespace Persistencia.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Dominio.ItemBoleta", b =>
+            modelBuilder.Entity("Dominio.DetalleBoleta", b =>
                 {
-                    b.HasOne("Dominio.Boleta", "Boleta")
-                        .WithMany("ListaItems")
+                    b.HasOne("Dominio.Boleta", null)
+                        .WithMany("ProductoLink")
                         .HasForeignKey("BoletaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Dominio.Producto", "Producto")
-                        .WithMany()
+                        .WithMany("BoletaLink")
                         .HasForeignKey("ProductoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Dominio.Pedido", b =>
-                {
-                    b.HasOne("Dominio.Boleta", "Boleta")
-                        .WithMany()
-                        .HasForeignKey("BoletaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Dominio.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId1");
                 });
 
             modelBuilder.Entity("Dominio.Producto", b =>

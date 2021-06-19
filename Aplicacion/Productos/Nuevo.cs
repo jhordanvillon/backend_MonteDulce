@@ -16,7 +16,9 @@ namespace Aplicacion.Productos
             public string Descripcion {get;set;}
             public string ImgLink {get;set;}
             public string ImgId {get;set;}
+            public Guid CategoriaId {get;set;}
             public decimal Precio {get;set;}
+            public int Stock {get;set;}
         }
 
         public class EjecutaValidator : AbstractValidator<Ejecuta>{
@@ -24,6 +26,7 @@ namespace Aplicacion.Productos
                 RuleFor(x => x.Nombre).NotEmpty();
                 RuleFor(x => x.Descripcion).NotEmpty();
                 RuleFor(x => x.Precio).NotEmpty();
+                RuleFor(x => x.Stock).NotEmpty();
             }
         }
 
@@ -41,7 +44,8 @@ namespace Aplicacion.Productos
                     Nombre = request.Nombre,
                     ImgLink = request.ImgLink,
                     ImgId = request.ImgId,
-                    Precio = request.Precio
+                    Precio = request.Precio,
+                    CategoriaId = request.CategoriaId
                 };
 
                 _context.Producto.Add(producto);

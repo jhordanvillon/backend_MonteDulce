@@ -13,13 +13,14 @@ namespace Persistencia
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<DetalleBoleta>().HasKey(ci => new{ci.BoletaId,ci.ProductoId});
+            modelBuilder.Entity<Categoria>();
         }
 
         public DbSet<Categoria> Categoria { get; set; }
         public DbSet<Producto> Producto { get; set; }
-        public DbSet<Boleta> Boleta {get;set;}
-        public DbSet<DetalleBoleta> DetalleBoleta {get;set;}
         public DbSet<Usuario> Usuario {get;set;}
+        public DbSet<ItemBoleta> ItemBoleta {get;set;}
+        public DbSet<Pedido> Pedido {get;set;}
+        public DbSet<Boleta> Boleta {get;set;}
     }
 }

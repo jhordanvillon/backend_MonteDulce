@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Aplicacion.Contratos;
@@ -27,7 +28,7 @@ namespace Aplicacion.Seguridad
                     NombreCompleto = usuario.NombreCompleto,
                     Username = usuario.UserName,
                     Token = _jwtGenerador.CrearToken(usuario),
-                    Imagen = null,
+                    ExpiresIn = DateTime.Now.AddDays(30).Ticks,
                     Email = usuario.Email
                 };
             }

@@ -22,6 +22,7 @@ namespace Aplicacion.Seguridad
             public string Email {get;set;}
             public string Password {get;set;}
             public string Username {get;set;}
+            public string AdminNameRole {get;set;}
         }
 
         public class EjecutaValidador : AbstractValidator<Ejecuta>{
@@ -31,6 +32,7 @@ namespace Aplicacion.Seguridad
                 RuleFor(x => x.Email).NotEmpty();
                 RuleFor(x => x.Password).NotEmpty();
                 RuleFor(x => x.Username).NotEmpty();
+                RuleFor(x => x.AdminNameRole).NotEmpty();
             }
         }
 
@@ -58,7 +60,8 @@ namespace Aplicacion.Seguridad
                 var usuario = new Usuario{
                     NombreCompleto = request.Nombre + " " + request.Apellidos,
                     Email = request.Email,
-                    UserName = request.Username
+                    UserName = request.Username,
+                    AdminNameRole = request.AdminNameRole
                 };
 
                 var resultado = await _userManager.CreateAsync(usuario,request.Password);
@@ -68,7 +71,9 @@ namespace Aplicacion.Seguridad
                         NombreCompleto = usuario.NombreCompleto,
                         Token = _jwtGenerador.CrearToken(usuario),
                         Username = usuario.UserName,
-                        Email=usuario.Email
+                        Email=usuario.Email,
+                        ExpiresIn = DateTime.Now.AddDays(30).Ticks,
+                        AdminNameRole = usuario.AdminNameRole
                     };
                 }
 
